@@ -17,7 +17,18 @@ spec:
           image: mongo:3.6.5-jessie
           volumeMounts: # map directories in container with a directories on the physical system (for persistent data)
             - name: mongo-persistent-storage
-              mountPath: /data/db # folder in the container to map to folder in local  
+              mountPath: /data/db # folder in the container to map to folder in local
+      volumes: # list all the volumes we defined in container ^
+        - name: mongo-persistent-storage
+          # now we specify  HOW we want this mount implemented (file on host system, PV in cloud platform (AWS EBS))
+# THIS IS HARDCODING CONFIG
+#          hostPath:
+#            path: /mnt/minikubes-pv/
+#            type: DirectoryOrCreate
+# INSTEAD USE POINTER TO CONFIG SO IT'S EASY TO MAINTAIN WITH MULTIPLE PODS
+        # define pointer to config of HOW we want the mount to be implemented
+          persistentVolumeClaim:
+            claimName: mongo-pvc
 ---
 apiVersion: v1
 kind: Service

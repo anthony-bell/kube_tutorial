@@ -1,0 +1,21 @@
+# Local Storage - mongo-pvc What do we want for storage?
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  storageClassName: cloud-ssd # binding the requirement to PVs with label name specified here.
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 7Gi # Kubernetes needs to go out and find 20 gb of storage in a persistent volume
+---
+# Where we want to define how we want to store data (local, aws, azure, google cloud, etc.)
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: cloud-ssd
+provisioner: kubernetes.io/aws-ebs
+parameters:
+        type: gp2

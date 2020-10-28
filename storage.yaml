@@ -1,0 +1,27 @@
+# Local Storage - mongo-pvc What do we want for storage?
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  storageClassName: mylocalstorage # binding the requirement to PVs with label name specified here.
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi # Kubernetes needs to go out and find 20 gb of storage in a persistent volume
+---
+# Where we want to define how we want to store data (local, aws, azure, google cloud, etc.)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-storage
+spec:
+  storageClassName: mylocalstorage
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/new-mongo-pvc/"
+    type: DirectoryOrCreate

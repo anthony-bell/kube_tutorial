@@ -18,6 +18,8 @@ pipeline {
       steps {
         echo 'Building the application...'
 //         echo "Building version ${NEW_VERSION}"
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
         sh 'docker build -t chessmaster21/python:1.0.0 .'
       }
     }

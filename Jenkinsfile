@@ -3,7 +3,7 @@ pipeline {
   environment {
     BUILD_TAG = '1.0.0' // Usually extract from code
     DOCKER_REG = 'chessmaster21'
-    PROD_SERVER = '172.31.8.4'
+    PROD_SERVER = '52.53.223.118'
 //     DOCKER_CREDENTIALS = credentials('docker-hub-credentials') //credentials binding plugin, this is id of created credentials in jenkins
   }
   stages {
@@ -52,7 +52,7 @@ pipeline {
         sshagent(['dev-pem-key']){
             script {
                 def dockerRun = "docker run -d --name python-emoji ${DOCKER_REG}/python:${BUILD_TAG}"
-                sh "ssh -o StrictHostKeyCheckin=no ec2-user@${PROD_SERVER} ${dockerRun}"
+                sh "ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} ${dockerRun}"
 
             }
         }

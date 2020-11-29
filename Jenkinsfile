@@ -52,7 +52,7 @@ pipeline {
         sshagent(['dev-pem-key']){
             script {
                 def dockerRun = "docker run -d --name python-emoji ${DOCKER_REG}/python:${BUILD_TAG}"
-                sh "ssh -o StrictHostKeyCheckin=no ec2-user ${PROD_SERVER} ${dockerRun}"
+                sh "ssh -o StrictHostKeyCheckin=no ec2-user@${PROD_SERVER} ${dockerRun}"
 
             }
         }

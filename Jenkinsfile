@@ -3,7 +3,7 @@ pipeline {
   environment {
     BUILD_TAG = '1.0.0' // Usually extract from code
     DOCKER_REG = 'chessmaster21'
-    PROD_SERVER = '52.53.223.118'
+    PROD_SERVER = '172.31.8.4'
 //     DOCKER_CREDENTIALS = credentials('docker-hub-credentials') //credentials binding plugin, this is id of created credentials in jenkins
   }
   stages {

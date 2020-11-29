@@ -45,17 +45,18 @@ pipeline {
       }
     }
 
-    stage("Deploy container on Dev server") {
+    stage("Deploy container on Dev servers") {
       steps {
         echo 'Deploying the application to ${PROD_SERVER}...'
         echo "ssh into ${PROD_SERVER} using credentials: "
-        sshagent(['dev-pem-key']){
-            script {
-                def dockerRun = "docker run -it -d --name python-emoji ${DOCKER_REG}/python:${BUILD_TAG}"
-                sh "ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} ${dockerRun}"
-
-            }
-        }
+//         sshagent(['dev-pem-key']){
+//             script {
+//                 def dockerRun = "docker run -it -d --name python-emoji ${DOCKER_REG}/python:${BUILD_TAG}"
+//                 sh "ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} ${dockerRun}"
+//
+//             }
+//         }
+        ansiblePlaybook credentialsId: 'dev-pem-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts', playbook: 'ubuntu_playbook.yaml'
       }
     }
   }

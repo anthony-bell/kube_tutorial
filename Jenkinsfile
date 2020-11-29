@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    BUILD_TAG = '1.0.0' // Usually extract from code
+//     BUILD_TAG = '1.0.0' // Usually extract from code
 //     DOCKER_CREDENTIALS = credentials('docker-hub-credentials') //credentials binding plugin, this is id of created credentials in jenkins
   }
   stages {
@@ -18,8 +18,19 @@ pipeline {
       steps {
         echo 'Building the application...'
 //         echo "Building version ${NEW_VERSION}"
-        def pythonApp = docker.build "chessmaster21/python:${BUILD_TAG}"
-        pythonApp.push()
+        withCredentials([
+            usernamePassword(credentials: 'docker-hub-credentials', usernameVariable: USR, passwordVariable: PWD)
+            ]) {
+
+                script {
+                    docker.withRegistry('https://hub.docker.com/', "docker login -u ${USR} -p ${PWD}") {
+//                       git '…'
+                      docker.build('python').push("${env.BUILD_TAG}")
+                    }
+                }
+            }
+
+
       }
     }
 
@@ -28,13 +39,6 @@ pipeline {
 
       steps {
         echo 'pushing the application...'
-        withCredentials([
-            usernamePassword(credentials: 'docker-hub-credentials', usernameVariable: USR, passwordVariable: PWD)
-            ]) {
-                sh "docker login -u ${USR} -p ${PWD}"
-            }
-
-        sh 'docker push chessmaster21/python:1.0.0'
       }
     }
 

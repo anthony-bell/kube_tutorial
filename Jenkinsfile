@@ -1,9 +1,9 @@
 pipeline {
   agent any
-//   environment {
-// //     BUILD_TAG = '1.0.0' // Usually extract from code
-// //     DOCKER_CREDENTIALS = credentials('docker-hub-credentials') //credentials binding plugin, this is id of created credentials in jenkins
-//   }
+  environment {
+    BUILD_TAG = '1.0.0' // Usually extract from code
+//     DOCKER_CREDENTIALS = credentials('docker-hub-credentials') //credentials binding plugin, this is id of created credentials in jenkins
+  }
   stages {
     
 
@@ -17,7 +17,7 @@ pipeline {
 
       steps {
         echo 'Building the application...'
-//         echo "Building version ${NEW_VERSION}"
+        echo "Building version ${BUILD_TAG}"
         withCredentials([
             usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USR', passwordVariable: 'PWD')
             ]) {
@@ -25,7 +25,7 @@ pipeline {
                 script {
                     def dockerHome = tool 'myDocker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    def	image = docker.build("${USR}/python:${env.BUILD_TAG}")
+                    def	image = docker.build("${USR}/python:${BUILD_TAG}")
                     sh "docker login -u ${USR} -p ${PWD}"
                     image.push()
 

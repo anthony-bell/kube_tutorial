@@ -27,7 +27,7 @@ pipeline {
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
                     def	image = docker.build("${USR}/${env.BUILD_TAG}")
                     sh "docker login -u ${USR} -p ${PWD}"
-                    myImage.push("${USR}/${env.BUILD_TAG}")
+                    image.push("${USR}/${env.BUILD_TAG}")
 
 
                 }

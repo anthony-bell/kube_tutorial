@@ -6,6 +6,7 @@ pipeline {
   }
   stages {
     
+
     stage("Build docker image") {
       when  {
         expression {
@@ -13,6 +14,7 @@ pipeline {
         }
 
       }
+
       steps {
         echo 'Building the application...'
 //         echo "Building version ${NEW_VERSION}"
@@ -20,7 +22,9 @@ pipeline {
       }
     }
 
+
     stage("Push image to hub") {
+
       steps {
         echo 'pushing the application...'
         withCredentials([

@@ -27,7 +27,7 @@ pipeline {
 //                       git '…'
                         def	image = docker.build("${USR}/${env.BUILD_TAG}")
                         sh "docker login -u ${USR} -p ${PWD}"
-                        myImage.push("${USR}/${env.BUILD_NUMBER}")
+                        myImage.push("${USR}/${env.BUILD_TAG}")
 
                     }
                 }

@@ -17,7 +17,7 @@ pipeline {
 
       steps {
         echo 'Building the application...'
-//         echo "Building version ${NEW_VERSION} heyy"
+//         echo "Building version ${NEW_VERSION}"
         withCredentials([
             usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USR', passwordVariable: 'PWD')
             ]) {

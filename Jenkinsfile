@@ -1,9 +1,9 @@
 pipeline {
   agent any
-  environment {
-//     BUILD_TAG = '1.0.0' // Usually extract from code
-//     DOCKER_CREDENTIALS = credentials('docker-hub-credentials') //credentials binding plugin, this is id of created credentials in jenkins
-  }
+//   environment {
+// //     BUILD_TAG = '1.0.0' // Usually extract from code
+// //     DOCKER_CREDENTIALS = credentials('docker-hub-credentials') //credentials binding plugin, this is id of created credentials in jenkins
+//   }
   stages {
     
 

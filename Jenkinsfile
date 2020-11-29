@@ -25,7 +25,7 @@ pipeline {
                 script {
                     def dockerHome = tool 'myDocker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    def	image = docker.build("${USR}/${env.BUILD_TAG}")
+                    def	image = docker.build("${USR}/python:${env.BUILD_TAG}")
                     sh "docker login -u ${USR} -p ${PWD}"
                     image.push()
 

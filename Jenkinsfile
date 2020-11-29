@@ -51,7 +51,7 @@ pipeline {
         echo "ssh into ${PROD_SERVER} using credentials: "
         sshagent(['dev-pem-key']){
             script {
-                def dockerRun = "docker run -d --name python-emoji ${DOCKER_REG}/python:${BUILD_TAG}"
+                def dockerRun = "docker run -it -d --name python-emoji ${DOCKER_REG}/python:${BUILD_TAG}"
                 sh "ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} ${dockerRun}"
 
             }

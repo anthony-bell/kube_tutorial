@@ -23,7 +23,7 @@ pipeline {
             ]) {
 
                 script {
-                    docker.withRegistry('https://hub.docker.com/', "docker login") {
+                    docker.withRegistry('https://hub.docker.com/', "docker login -u ${USR} -p ${PWD}") {
 //                       git '…'
                       docker.build('python').push("${USR}/${env.BUILD_TAG}")
                     }
